@@ -1,13 +1,20 @@
-import { FlatList, SafeAreaView, Text, TextInput, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { FlatList, SafeAreaView, Text, TextInput, View, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native'
 import React, { Component } from 'react'
 import { responsiveFontSize, responsiveHeight, responsiveWidth, } from 'react-native-responsive-dimensions';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import auth from '@react-native-firebase/auth';
 
 interface IProps {
-
+    navigation?: {
+        navigate: (ara: string) => void
+    }
 }
 interface IState {
-    isLoginPage: boolean
+    name: string,
+    email: string,
+    password: string,
+    confirmPassword: string
+
 }
 
 const inputsData = [
@@ -17,7 +24,7 @@ const inputsData = [
     },
     {
         id: 2,
-        placeholder: 'Enter address',
+        placeholder: 'Email address',
     },
     {
         id: 3,
@@ -25,71 +32,101 @@ const inputsData = [
     },
     {
         id: 4,
-        placeholder: 'confirm password',
+        placeholder: 'Confirm password',
     },
 ]
 
 export class SignUpScreen extends Component<IProps, IState> {
-    state: IState = { isLoginPage: false }
+    state: IState = {
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    }
 
     handleLoginPage = () => {
-        // this.setState({ isLoginPage: true })
-        this.setState(p=>({isLoginPage : !p.isLoginPage}))
+        this.props.navigation?.navigate('loginScreen')
+    }
+
+    createAccount = () => {
+        auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => {
+                this.props.navigation?.navigate('loginScreen')
+                console.log('User account created & signed in!');
+            })
+            .catch(error => {
+                if (error.code === 'auth/email-already-in-use') {
+                    console.log('That email address is already in use!');
+                }
+
+                if (error.code === 'auth/invalid-email') {
+                    console.log('That email address is invalid!');
+                }
+
+                console.error(error);
+            });
+    }
+
+ 
+    
+
+    getTextByInput = (text: string, index: number) => {
+        console.log(text,index)
+        switch (index) {
+            case 1:
+                this.setState({ name: text })
+                break;
+            case 2:
+                this.setState({ email: text })
+                break;
+            case 3:
+                this.setState({ password: text })
+                break;
+            default:
+                this.setState({ confirmPassword: text })
+        }
     }
     render() {
-        const { isLoginPage } = this.state
         return (
             <SafeAreaView>
                 <View style={styles.signUpstyles}>
-                    {isLoginPage ? (<>
-                            <Text style={styles.headerText}>
-                                Log into your account
-                            </Text>
+                    <Text style={styles.headerText}>
+                        Create your account
+                    </Text>
+                    <FlatList
+                        data={inputsData}
+                        renderItem={({ item }) => (
                             <View style={styles.inputStyles}>
-                                <TextInput style={styles.inputTextStyles} placeholder='Email address'
+                                <TextInput testID={`input${item.id}`}
+                                    onChangeText={(text) => this.getTextByInput(text, item.id)}
+                                    style={styles.inputTextStyles} 
+                                    placeholder={item.placeholder} 
                                     placeholderTextColor='rgba(0, 0, 0, 1)' />
                             </View>
-                            <View style={styles.inputStyles}>
-                                <TextInput style={styles.inputTextStyles} placeholder='Pasword'
-                                    placeholderTextColor='rgba(0, 0, 0, 1)' />
+                        )}
+                    />
+                    <View style={{ alignItems: 'center', gap: responsiveHeight(3) }}>
+                        <TouchableOpacity style={styles.btnContainer} onPress={this.createAccount}>
+                            <Text style={styles.btnText}>SIGN UP</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.orSignupText}>or sign up with</Text>
+                        <View style={{ alignItems: 'center', flexDirection: 'row', gap: 10 }}>
+                            <View style={styles.socialCont}>
+                                <Image style={styles.imageStyles} source={{ uri: ('https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png') }} />
                             </View>
-                            <Text style={[styles.inputTextStyles, { alignSelf: 'flex-end' }]} >Forgot Password?</Text>
-                        </>
-                        ) : (<>
-                            <Text style={styles.headerText}>
-                                Create your account
-                            </Text>
-                            <FlatList
-                                data={inputsData}
-                                renderItem={({ item }) => (
-                                    <View style={styles.inputStyles}>
-                                        <TextInput style={styles.inputTextStyles} placeholder={item.placeholder} placeholderTextColor='rgba(0, 0, 0, 1)' />
-                                    </View>
-                                )}
-                            />
-                        </>
-                )}
-                        <View style={{ alignItems: 'center', gap: responsiveHeight(3) }}>
-                            <TouchableOpacity style={styles.btnContainer}>
-                                <Text style={styles.btnText}>{isLoginPage ? "Log In" : "SIGN UP"}</Text>
-                            </TouchableOpacity>
-                            <Text style={styles.orSignupText}>or sign up with</Text>
-                            <View style={{ alignItems: 'center', flexDirection: 'row', gap: 10 }}>
-                                <View style={styles.socialCont}>
-                                    <Image style={styles.imageStyles} source={{ uri: ('https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png') }} />
-                                </View>
-                                <View style={styles.socialCont}>
-                                    <Image style={[styles.imageStyles]} source={{ uri: 'https://w7.pngwing.com/pngs/249/19/png-transparent-google-logo-g-suite-google-guava-google-plus-company-text-logo.png' }} />
-                                </View>
-                                <View style={styles.socialCont}>
-                                    <EvilIcons name="sc-facebook" color="blue" size={40} />
-                                </View>
+                            <View style={styles.socialCont}>
+                                <Image style={[styles.imageStyles]} source={{ uri: 'https://w7.pngwing.com/pngs/249/19/png-transparent-google-logo-g-suite-google-guava-google-plus-company-text-logo.png' }} />
+                            </View>
+                            <View style={styles.socialCont}>
+                                <EvilIcons name="sc-facebook" color="blue" size={40} />
                             </View>
                         </View>
-                        <Text style={styles.footerText}>Already have account? <TouchableOpacity onPress={this.handleLoginPage}>
-                            <Text style={styles.loginStyles}>{isLoginPage ? 'Sign Up' : 'Log In'}</Text>
-                        </TouchableOpacity></Text>
                     </View>
+                    <Text style={styles.footerText}>Already have account? <TouchableOpacity testID='loginBtn' onPress={this.handleLoginPage}>
+                        <Text style={styles.loginStyles}>Log In</Text>
+                    </TouchableOpacity></Text>
+                </View>
                 {/* </View> */}
             </SafeAreaView>
         )

@@ -4,9 +4,22 @@ import {
     responsiveHeight,
     responsiveWidth,
     responsiveFontSize
-  } from "react-native-responsive-dimensions";
+} from "react-native-responsive-dimensions";
 
-export class LandingPage extends Component {
+interface IProps{
+    navigation?:{
+        navigate:(arg:string)=>void
+    }
+}
+interface IState{
+
+}
+
+export class LandingPage extends Component<IProps,IState> {
+
+    handleLoginPage=()=>{
+        this.props.navigation?.navigate('couroselScreen')
+    }
   render() {
     return (
      <SafeAreaView>
@@ -15,7 +28,7 @@ export class LandingPage extends Component {
                 <View style={styles.contentStyles}>
                     <Text style={styles.welcomeText}>Welcome to Fluxstore!</Text>
                     <Text style={styles.tagline}>The home for a fashionista</Text>
-                <TouchableOpacity style={styles.buttonCont}>
+                <TouchableOpacity testID='startBtn' onPress={this.handleLoginPage} style={styles.buttonCont}>
                     <Text style={styles.buttonText}>Get Started</Text>
                 </TouchableOpacity>
                 </View>
@@ -84,6 +97,3 @@ const styles = StyleSheet.create({
     
 })
 
-function blur(arg0: number): any {
-    throw new Error('Function not implemented.');
-}

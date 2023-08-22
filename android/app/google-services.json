@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "720583868902",
+    "project_id": "flux-store-d1ff9",
+    "storage_bucket": "flux-store-d1ff9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720583868902:android:4bca0a8e6ff683b3365627",
+        "android_client_info": {
+          "package_name": "com.fluxstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720583868902-fb05u9uc65k169ct1dljacbdbd12h2mq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOXlt28-MOs7oSEv6Ai2MfIP_fRcVwYJU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720583868902-fb05u9uc65k169ct1dljacbdbd12h2mq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
