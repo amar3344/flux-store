@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "720583868902-fb05u9uc65k169ct1dljacbdbd12h2mq.apps.googleusercontent.com",
+          "client_id": "720583868902-4cdr1p91siq1uu470ar400gecskghq78.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +27,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "720583868902-fb05u9uc65k169ct1dljacbdbd12h2mq.apps.googleusercontent.com",
+              "client_id": "720583868902-4cdr1p91siq1uu470ar400gecskghq78.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "720583868902-k7etivdjhrbsn6r6iun4p79nqri4kmso.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.FluxStore"
+              }
             }
           ]
         }

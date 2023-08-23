@@ -3,6 +3,11 @@ import React, { Component } from 'react'
 import { responsiveFontSize, responsiveHeight, responsiveWidth, } from 'react-native-responsive-dimensions';
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import auth from '@react-native-firebase/auth';
+import {
+    GoogleSignin,
+    statusCodes,
+    GoogleSigninButton,
+  } from '@react-native-google-signin/google-signin';
 
 
 interface IProps{
@@ -17,6 +22,9 @@ interface IState{
 }
 
 export class LoginScreen extends Component<IProps,IState> {
+    componentDidMount(): void {
+        GoogleSignin.configure();
+      }
 
     state:IState = {email:"",password:""}
 
@@ -42,6 +50,30 @@ export class LoginScreen extends Component<IProps,IState> {
                 console.log(error, 'login error');
               });
           };
+
+    googleLogin= async ()=>{
+        // console.log("goole login function")
+        try {
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            console.log(userInfo);
+            this.props.navigation?.navigate('homeScreen');
+          } catch (error: any) {
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+              // user cancelled the login flow
+              console.log(error, '1');
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+              console.log(error, '2');
+              // operation (e.g. sign in) is in progress already
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+              console.log(error, '3');
+              // play services not available or outdated
+            } else {
+              console.log(error, '4');
+              // some other error happened
+            }
+          }
+    }
  
     render() {
         const {email,password} = this.state
@@ -72,9 +104,9 @@ export class LoginScreen extends Component<IProps,IState> {
                         <View style={styles.socialCont}>
                             <Image style={styles.imageStyles} source={{ uri: ('https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.png') }} />
                         </View>
-                        <View style={styles.socialCont}>
+                        <TouchableOpacity style={styles.socialCont} onPress={this.googleLogin}>
                             <Image style={[styles.imageStyles]} source={{ uri: 'https://w7.pngwing.com/pngs/249/19/png-transparent-google-logo-g-suite-google-guava-google-plus-company-text-logo.png' }} />
-                        </View>
+                        </TouchableOpacity>
                         <View style={styles.socialCont}>
                             <EvilIcons name="sc-facebook" color="blue" size={40} />
                         </View>

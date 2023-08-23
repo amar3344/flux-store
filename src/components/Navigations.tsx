@@ -18,13 +18,13 @@ export class Navigations extends Component {
       <Stack.Navigator screenOptions={{
         headerShown:false
       }}>
-        <Stack.Screen name="landingPage" component={LandingPage}/>
+        {/* <Stack.Screen name="landingPage" component={LandingPage}/>
         <Stack.Screen name="couroselScreen" component={Courosel}/>
         <Stack.Screen name="createScreen" component={SignUpScreen}/>
         <Stack.Screen name="loginScreen" component={LoginScreen}/>
         <Stack.Screen name="forgotPasswordScreen" component={ForgotpasswordScreen}/>
-        <Stack.Screen name="verificationScreen" component={VerificationScreen}/>
-        <Stack.Screen name="newPasswordScreen" component={NewPasswordScreen}/>
+        <Stack.Screen name="verificationScreen" component={VerificationScreen}/> */}
+        {/* <Stack.Screen name="newPasswordScreen" component={NewPasswordScreen}/> */}
         <Stack.Screen name="homeScreen" component={HomeScreen}/>
         
       </Stack.Navigator>
