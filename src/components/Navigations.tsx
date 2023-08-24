@@ -9,6 +9,7 @@ import VerificationScreen from '../screens/VerificationScreen'
 import NewPasswordScreen from '../screens/NewPasswordScreen'
 import HomeScreen from '../screens/HomeScreen'
 import LoginScreen from '../screens/LoginScreen'
+import BottomTabs from './BottomTabs'
 
 const Stack = createStackNavigator()
 
@@ -25,7 +26,7 @@ export class Navigations extends Component {
         <Stack.Screen name="forgotPasswordScreen" component={ForgotpasswordScreen}/>
         <Stack.Screen name="verificationScreen" component={VerificationScreen}/> */}
         {/* <Stack.Screen name="newPasswordScreen" component={NewPasswordScreen}/> */}
-        <Stack.Screen name="homeScreen" component={HomeScreen}/>
+        <Stack.Screen name="bottomTabs" component={BottomTabs}/>
         
       </Stack.Navigator>
     )

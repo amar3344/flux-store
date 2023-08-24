@@ -44,7 +44,7 @@ export class LoginScreen extends Component<IProps,IState> {
               .signInWithEmailAndPassword(this.state.email, this.state.password)
               .then(res => {
                 console.log(JSON.stringify(res));
-                this.props.navigation?.navigate("homeScreen")
+                this.props.navigation?.navigate("bottomTabs")
               })
               .catch(error => {
                 console.log(error, 'login error');

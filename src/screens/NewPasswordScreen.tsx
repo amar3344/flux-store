@@ -34,7 +34,7 @@ export class NewPasswordScreen extends Component<IProps, IState> {
     }
 
     handleHomePage = () => {
-        this.props.navigation?.navigate('homeScreen')
+        this.props.navigation?.navigate('bottomTabs')
     }
 
     getBottomSheetPage = () => {
@@ -46,7 +46,7 @@ export class NewPasswordScreen extends Component<IProps, IState> {
         console.log(enable)
         return (
             <SafeAreaView>
-                <GestureHandlerRootView style={[styles.signUpstyles,{opacity:enable !== 0 ? 0.5:1}]}>
+                <GestureHandlerRootView style={[styles.signUpstyles, { opacity: enable !== 0 ? 0.5 : 1 }]}>
                     <TouchableOpacity testID='backBtn' onPress={() => this.props.navigation?.goBack()} style={styles.goBackBtnContainer}>
                         <EvilIcons name="chevron-left" size={30} color="#000" />
                     </TouchableOpacity>
@@ -66,24 +66,24 @@ export class NewPasswordScreen extends Component<IProps, IState> {
                             placeholderTextColor='rgba(0, 0, 0, 1)' />
                         <Feather onPress={() => this.setState(p => ({ eyeoff: !p.eyeoff }))} name={eyeoff ? "eye-off" : "eye"} size={25} color={'rgba(0, 0, 0, 0.54)'} />
                     </View>
-                   
+
                     <TouchableOpacity testID='confirmBtn'
-                     disabled={confirmPassword === "" && password === ""} style={(confirmPassword !== "" && password !== "") ? styles.btnContainerEnable : styles.btnContainerDisable} onPress={this.getBottomSheetPage}>
+                        disabled={confirmPassword === "" && password === ""} style={(confirmPassword !== "" && password !== "") ? styles.btnContainerEnable : styles.btnContainerDisable} onPress={this.getBottomSheetPage}>
                         <Text style={styles.btnText}>Confirm</Text>
                     </TouchableOpacity>
-                    <BottomSheet 
+                    <BottomSheet
                         index={enable}
-                        snapPoints={["1%","45%"]}
+                        snapPoints={["1%", "45%"]}
                         // onChange={(index)=>this.handleChange(index)}
                         backgroundStyle={styles.bottomSheet}
-                        >
-                                <Image style={styles.successImgStyles} source={require("../assets/landingimgs/success.png")} />
-                                <Text style={styles.passwordText} >Your password has been changed</Text>
-                                <Text style={styles.welcomeStyles}>Welcome back! Discover now!</Text>
-                            <TouchableOpacity style={[styles.btnContainerEnable,{backgroundColor: 'rgba(0, 0, 0, 1)',}]} onPress={this.handleHomePage}>
+                    >
+                        <Image style={styles.successImgStyles} source={require("../assets/landingimgs/success.png")} />
+                        <Text style={styles.passwordText} >Your password has been changed</Text>
+                        <Text style={styles.welcomeStyles}>Welcome back! Discover now!</Text>
+                        <TouchableOpacity style={[styles.btnContainerEnable, { backgroundColor: 'rgba(0, 0, 0, 1)', }]} onPress={this.handleHomePage}>
                             <Text style={styles.btnText}>Browse home</Text>
                         </TouchableOpacity>
-                        </BottomSheet>
+                    </BottomSheet>
                 </GestureHandlerRootView>
             </SafeAreaView>
         )
@@ -94,35 +94,35 @@ export default NewPasswordScreen
 
 const styles = StyleSheet.create({
 
-    welcomeStyles:{
-        color:'rgba(51, 34, 24, 1)',
-        fontSize:responsiveFontSize(1.5),
-        fontWeight:'400',
-        fontFamily:'Product Sans Light',
-        alignSelf:'center',
-        marginVertical:responsiveHeight(2),
+    welcomeStyles: {
+        color: 'rgba(51, 34, 24, 1)',
+        fontSize: responsiveFontSize(1.5),
+        fontWeight: '400',
+        fontFamily: 'Product Sans Light',
+        alignSelf: 'center',
+        marginVertical: responsiveHeight(2),
 
     },
 
-    passwordText:{
-        color:'rgba(51, 34, 24, 1)',
-        fontSize:responsiveFontSize(2),
-        fontWeight:'400',
-        fontFamily:'Product Sans Medium',
-        alignSelf:'center',
-        marginVertical:responsiveHeight(1),
+    passwordText: {
+        color: 'rgba(51, 34, 24, 1)',
+        fontSize: responsiveFontSize(2),
+        fontWeight: '400',
+        fontFamily: 'Product Sans Medium',
+        alignSelf: 'center',
+        marginVertical: responsiveHeight(1),
     },
 
     successImgStyles: {
         height: responsiveHeight(10),
         width: responsiveWidth(15),
-        alignSelf:'center',
-        marginTop:responsiveHeight(5),
+        alignSelf: 'center',
+        marginTop: responsiveHeight(5),
     },
 
     bottomSheet: {
         borderRadius: responsiveHeight(5),
-        backgroundColor:'#fff',
+        backgroundColor: '#fff',
         // alignSelf:'center',
         // justifyContent:'center',
         // alignItems:'center',
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     signUpstyles: {
         gap: responsiveHeight(5),
         padding: responsiveWidth(5),
-        height:responsiveHeight(100)
+        height: responsiveHeight(100)
     },
 
 })
