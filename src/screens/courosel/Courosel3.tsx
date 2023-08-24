@@ -6,7 +6,29 @@ import {
     responsiveFontSize
 } from "react-native-responsive-dimensions";
 
-export class Courosel3 extends Component {
+interface IProps{
+    props:{
+        navigation?:{
+            navigate:(arg:string)=>void
+        }
+    },
+    intervalId:any
+
+}
+interface IState{
+
+}
+
+
+export class Courosel3 extends Component<IProps,IState> {
+
+    handleAccountScreen = ()=>{
+        // console.log("coresel=3")
+        // console.log("=>3",this.props)
+        clearInterval(this.props.intervalId)
+        this.props.props.navigation?.navigate('createScreen')
+    }
+
   render() {
     return (
         <SafeAreaView>
@@ -24,7 +46,7 @@ export class Courosel3 extends Component {
                     <View style={styles.dotBackground}/>
                     <View style={styles.dots} />
                 </View>
-                <TouchableOpacity style={styles.btnContainer}>
+                <TouchableOpacity testID='shoppingBtn3' style={styles.btnContainer} onPress={this.handleAccountScreen}>
                     <Text style={styles.btnText}>Shopping now</Text>
                 </TouchableOpacity>
             </View>

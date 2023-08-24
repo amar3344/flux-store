@@ -6,7 +6,25 @@ import {
     responsiveFontSize
 } from "react-native-responsive-dimensions";
 
-export class Courosel2 extends Component {
+interface IProps{
+    props:{
+        navigation?:{
+            navigate:(arg:string)=>void
+        }
+    },
+    intervalId:any
+
+}
+interface IState{
+
+}
+
+export class Courosel2 extends Component<IProps,IState> {
+
+    handleAccountScreen = ()=>{
+        clearInterval(this.props.intervalId)
+        this.props.props.navigation?.navigate('createScreen')
+    }
   render() {
     return (
         <SafeAreaView>
@@ -25,7 +43,7 @@ export class Courosel2 extends Component {
                     <View style={styles.dots} />
                     <View style={styles.dotBackground}/>
                 </View>
-                <TouchableOpacity style={styles.btnContainer}>
+                <TouchableOpacity testID='shoppingBtn2' onPress={this.handleAccountScreen} style={styles.btnContainer}>
                     <Text style={styles.btnText}>Shopping now</Text>
                 </TouchableOpacity>
             </View>
@@ -42,13 +60,7 @@ const styles = StyleSheet.create({
         height:responsiveHeight(40),
         width:responsiveWidth(5),
         borderRadius:5,
-        // borderBottomRightRadius:responsiveWidth(0.5),
-        // borderTopRightRadius:responsiveWidth(0.5),
-        // borderTopLeftRadius:responsiveWidth(0.5),
-        // borderBottomLeftRadius:responsiveWidth(0.5),
         backgroundColor: '#E7E8E9',
-        // borderWidth:1,
-        // borderColor:'red',
         position:'absolute',
         top:responsiveHeight(30),
         overflow:'hidden',

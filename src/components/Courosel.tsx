@@ -1,10 +1,5 @@
 import { Image, Text, View, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
 import React, { Component } from 'react'
-import {
-    responsiveHeight,
-    responsiveWidth,
-    responsiveFontSize
-} from "react-native-responsive-dimensions";
 import Courosel1 from '../screens/courosel/Courosel1';
 import Courosel2 from '../screens/courosel/Courosel2';
 import Courosel3 from '../screens/courosel/Courosel3';
@@ -17,12 +12,12 @@ interface IState{
     screen:number,
 }
 
-
+let intervalID:any = null;
 export class Courosel extends Component<IProps,IState> {
     state:IState = {screen:1}
 
     componentDidMount(): void {
-        setInterval(()=>{
+        intervalID = setInterval(()=>{
             this.updateScreens()
         },3000)
     }
@@ -37,9 +32,9 @@ export class Courosel extends Component<IProps,IState> {
     }
     render() {
         const {screen} = this.state
-        console.log(screen)
+        // console.log(screen)
         return (
-            (screen === 1 )? (<Courosel1/>):((screen === 2 ) ? (<Courosel2/>) : (<Courosel3/>))
+            (screen === 1 )? (<Courosel1 intervalId={intervalID} props = {this.props}/>):((screen === 2 ) ? (<Courosel2 intervalId={intervalID} props = {this.props}/>) : (<Courosel3 intervalId={intervalID} props = {this.props}/>))
         )
     }
 }
