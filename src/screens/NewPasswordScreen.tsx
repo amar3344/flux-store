@@ -1,13 +1,15 @@
-import { FlatList, SafeAreaView, Text, TextInput, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { SafeAreaView, Modal, Text, TextInput, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { Component } from 'react'
 import { responsiveFontSize, responsiveHeight, responsiveWidth, } from 'react-native-responsive-dimensions';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Feather from 'react-native-vector-icons/Feather'
+import BottomSheet from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 interface IProps {
-    navigation?:{
-        navigate:(arg:string)=>void,
-        goBack:()=>void
+    navigation?: {
+        navigate: (arg: string) => void,
+        goBack: () => void
     }
 }
 
@@ -15,12 +17,13 @@ interface IState {
     password: string,
     confirmPassword: string,
     eyeoff: boolean,
+    enable: number,
 }
 
 
 export class NewPasswordScreen extends Component<IProps, IState> {
 
-    state: IState = { password: "", confirmPassword: "", eyeoff: true }
+    state: IState = { password: "", confirmPassword: "", eyeoff: true, enable: 0 }
 
     getPassword = (input: string) => {
         this.setState({ password: input.trim() })
@@ -30,16 +33,21 @@ export class NewPasswordScreen extends Component<IProps, IState> {
         this.setState({ confirmPassword: input.trim() })
     }
 
-    handleHomePage=()=>{
+    handleHomePage = () => {
         this.props.navigation?.navigate('homeScreen')
     }
 
+    getBottomSheetPage = () => {
+        this.setState({ enable: 1 })
+    }
+
     render() {
-        const { password, confirmPassword, eyeoff } = this.state
+        const { password, confirmPassword, eyeoff, enable } = this.state
+        console.log(enable)
         return (
             <SafeAreaView>
-                <View style={styles.signUpstyles}>
-                    <TouchableOpacity testID='backBtn' onPress={()=>this.props.navigation?.goBack()} style={styles.goBackBtnContainer}>
+                <GestureHandlerRootView style={[styles.signUpstyles,{opacity:enable !== 0 ? 0.5:1}]}>
+                    <TouchableOpacity testID='backBtn' onPress={() => this.props.navigation?.goBack()} style={styles.goBackBtnContainer}>
                         <EvilIcons name="chevron-left" size={30} color="#000" />
                     </TouchableOpacity>
                     <Text style={styles.headerText}>
@@ -58,10 +66,25 @@ export class NewPasswordScreen extends Component<IProps, IState> {
                             placeholderTextColor='rgba(0, 0, 0, 1)' />
                         <Feather onPress={() => this.setState(p => ({ eyeoff: !p.eyeoff }))} name={eyeoff ? "eye-off" : "eye"} size={25} color={'rgba(0, 0, 0, 0.54)'} />
                     </View>
-                    <TouchableOpacity testID='confirmBtn' disabled={confirmPassword === "" && password === ""} style={(confirmPassword !== "" && password !== "") ? styles.btnContainerEnable : styles.btnContainerDisable} onPress={this.handleHomePage}>
+                   
+                    <TouchableOpacity testID='confirmBtn'
+                     disabled={confirmPassword === "" && password === ""} style={(confirmPassword !== "" && password !== "") ? styles.btnContainerEnable : styles.btnContainerDisable} onPress={this.getBottomSheetPage}>
                         <Text style={styles.btnText}>Confirm</Text>
                     </TouchableOpacity>
-                </View>
+                    <BottomSheet 
+                        index={enable}
+                        snapPoints={["1%","45%"]}
+                        // onChange={(index)=>this.handleChange(index)}
+                        backgroundStyle={styles.bottomSheet}
+                        >
+                                <Image style={styles.successImgStyles} source={require("../assets/landingimgs/success.png")} />
+                                <Text style={styles.passwordText} >Your password has been changed</Text>
+                                <Text style={styles.welcomeStyles}>Welcome back! Discover now!</Text>
+                            <TouchableOpacity style={[styles.btnContainerEnable,{backgroundColor: 'rgba(0, 0, 0, 1)',}]} onPress={this.handleHomePage}>
+                            <Text style={styles.btnText}>Browse home</Text>
+                        </TouchableOpacity>
+                        </BottomSheet>
+                </GestureHandlerRootView>
             </SafeAreaView>
         )
     }
@@ -70,6 +93,40 @@ export class NewPasswordScreen extends Component<IProps, IState> {
 export default NewPasswordScreen
 
 const styles = StyleSheet.create({
+
+    welcomeStyles:{
+        color:'rgba(51, 34, 24, 1)',
+        fontSize:responsiveFontSize(1.5),
+        fontWeight:'400',
+        fontFamily:'Product Sans Light',
+        alignSelf:'center',
+        marginVertical:responsiveHeight(2),
+
+    },
+
+    passwordText:{
+        color:'rgba(51, 34, 24, 1)',
+        fontSize:responsiveFontSize(2),
+        fontWeight:'400',
+        fontFamily:'Product Sans Medium',
+        alignSelf:'center',
+        marginVertical:responsiveHeight(1),
+    },
+
+    successImgStyles: {
+        height: responsiveHeight(10),
+        width: responsiveWidth(15),
+        alignSelf:'center',
+        marginTop:responsiveHeight(5),
+    },
+
+    bottomSheet: {
+        borderRadius: responsiveHeight(5),
+        backgroundColor:'#fff',
+        // alignSelf:'center',
+        // justifyContent:'center',
+        // alignItems:'center',
+    },
 
 
     btnText: {
@@ -151,7 +208,8 @@ const styles = StyleSheet.create({
 
     signUpstyles: {
         gap: responsiveHeight(5),
-        padding: responsiveWidth(5)
+        padding: responsiveWidth(5),
+        height:responsiveHeight(100)
     },
 
 })
