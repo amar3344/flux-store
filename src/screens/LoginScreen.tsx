@@ -91,7 +91,7 @@ export class LoginScreen extends Component<IProps,IState> {
                         <TextInput testID='password' value={password} onChangeText={(text)=>this.getPasswordInput(text)} style={styles.inputTextStyles} placeholder='Pasword'
                             placeholderTextColor='rgba(0, 0, 0, 1)' />
                     </View>
-                    <TouchableOpacity >
+                    <TouchableOpacity testID='passwordBtn' onPress={()=>this.props.navigation?.navigate("newPasswordScreen")}>
                         <Text style={[styles.inputTextStyles, { alignSelf: 'flex-end' }]} >Forgot Password?</Text>
                     </TouchableOpacity>
                 </View>

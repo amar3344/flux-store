@@ -1,6 +1,6 @@
 import { Component, ReactNode } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { responsiveFontSize as rf, responsiveHeight as rh } from "react-native-responsive-dimensions";
+import { responsiveFontSize as rf, responsiveHeight as rh } from "react-native-responsive-dimensions"
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 

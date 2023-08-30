@@ -7,7 +7,7 @@ export class App extends Component {
   render() {
     return (
       <NavigationContainer>
-        <StatusBar backgroundColor="transparent"  barStyle={'dark-content'}/>
+        <StatusBar backgroundColor="transparent" barStyle={'dark-content'}/>
         <Navigations/>
       </NavigationContainer>
     )

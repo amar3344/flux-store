@@ -3,9 +3,24 @@ import LoginScreen from '../src/screens/LoginScreen'
 
 jest.mock('react-native-vector-icons/EvilIcons',()=>()=><></>)
 
-jest.mock('@react-native-firebase/auth',()=>()=>({
-    signInWithEmailAndPassword:jest.fn().mockImplementation((...args)=>Promise.resolve(args))
+jest.mock('@react-native-google-signin/google-signin',()=>()=>({
+    signInWithEmailAndPassword:jest.fn().mockImplementation((...args)=>Promise.resolve(args)),
+    GoogleSignin:{
+            configure:jest.fn(),
+            signIn:jest.fn(),
+            hasPlayServices:jest.fn(),
+    },
+    statusCodes:()=>jest.fn(),
+
 }))
+
+jest.mock('@react-native-firebase/auth',()=>{
+    return{
+        default:{
+            auth:jest.fn()
+        }
+    }
+})
 
 const screenProps = {
     navigation:{
@@ -42,3 +57,9 @@ test('testing navigation toBe homeScreen',()=>{
     expect(screenProps.navigation.navigate).toBeCalledWith('homeScreen')
 })
 
+test('testing for navigation toBe forgetScreen',()=>{
+    render(<LoginScreen {...screenProps}/>)
+    const passwordBtn = screen.getByTestId('passewordBtn')
+    fireEvent.press(passwordBtn)
+    expect(screenProps.navigation.navigate).toBeCalledWith('newPasswordScreen')
+})

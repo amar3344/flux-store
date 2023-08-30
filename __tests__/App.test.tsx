@@ -15,6 +15,12 @@ import renderer from 'react-test-renderer';
 jest.mock('react-native-vector-icons/EvilIcons',()=>()=><></>)
 jest.mock('react-native-vector-icons/Feather',()=>()=><></>)
 jest.mock('react-native-vector-icons/AntDesign',()=>()=><></>)
+jest.mock('react-native-vector-icons/MaterialCommunityIcons',()=>()=><></>)
+jest.mock('react-native-vector-icons/SimpleLineIcons',()=>()=><></>)
+jest.mock('react-native-vector-icons/FontAwesome5',()=>()=><></>)
+jest.mock('react-native-vector-icons/FontAwesome6',()=>()=><></>)
+jest.mock('react-native-vector-icons/Octicons',()=>()=><></>)
+
 
 jest.mock('@react-navigation/native', () => {
   const actualNavigation = jest.requireActual('@react-navigation/native');
@@ -28,6 +34,20 @@ jest.mock('@react-navigation/native', () => {
 jest.mock('@react-navigation/stack',()=>({
   createStackNavigator:()=>({
       Navigator:jest.fn(),
+      Screen:jest.fn()
+  })
+}))
+
+jest.mock('@react-navigation/bottom-tabs',()=>({
+  createBottomTabNavigator:()=>({
+    Navigator:jest.fn(),
+    Screen:jest.fn()
+  })
+}))
+
+jest.mock('@react-navigation/drawer',()=>({
+  createDrawerNavigator:()=>({
+    Navigator:jest.fn(),
       Screen:jest.fn()
   })
 }))

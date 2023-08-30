@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Platform, SafeAreaView, Image, ImageBackground, FlatList, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, Platform, SafeAreaView, Image, ImageBackground, FlatList, ScrollView, StatusBar } from 'react-native'
 import React, { Component } from 'react'
 import { responsiveHeight as rh, responsiveWidth as rw, responsiveFontSize as rf, responsiveFontSize } from 'react-native-responsive-dimensions'
 import { HomeHeader } from '../components/common/HeaderSections'
